@@ -1,6 +1,5 @@
 -- CREATE DATABASE dbAcolhe
 
-DROP TABLE IF EXISTS MissaoCompleta;
 DROP TABLE IF EXISTS Humor;
 DROP TABLE IF EXISTS CompraSkin;
 DROP TABLE IF EXISTS UsuarioClinica;
@@ -34,8 +33,6 @@ CREATE TABLE Usuario
 , nmUsuario        VARCHAR(50)
 , saldo            INT
 , diasConsecutivos INT
-, imagem           TEXT
-, telefone         BIGINT
 , email            VARCHAR(50)
 , senha            VARCHAR(50)
 , codSkinPrincipal INT 
@@ -85,18 +82,8 @@ CREATE TABLE Humor
 ( codUsuario      INT
 , data            DATE
 , nivelSatisfacao SMALLINT
-, descricao       VARCHAR(300)
+, comentario      VARCHAR(300)
 , PRIMARY KEY (codUsuario, data)
-, FOREIGN KEY (codUsuario) REFERENCES Usuario (codUsuario)
-);
-
-
-CREATE TABLE MissaoCompleta
-( codMissao  INT
-, codUsuario INT
-, valor      INT DEFAULT(0)
-, PRIMARY KEY (codMissao, codUsuario)
-, FOREIGN KEY (codMissao)  REFERENCES Missao  (codMissao)
 , FOREIGN KEY (codUsuario) REFERENCES Usuario (codUsuario)
 );
 
