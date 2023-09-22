@@ -5,7 +5,6 @@ DROP TABLE IF EXISTS CompraSkin;
 DROP TABLE IF EXISTS UsuarioClinica;
 DROP TABLE IF EXISTS Clinica;
 DROP TABLE IF EXISTS Usuario;
-DROP TABLE IF EXISTS Missao;
 DROP TABLE IF EXISTS Skin;
 
 
@@ -19,15 +18,6 @@ CREATE TABLE Skin
 );
 
 
-CREATE TABLE Missao
-( codMissao SERIAL
-, nmMissao  VARCHAR(50)
-, descricao VARCHAR(80)
-, valor     INT         DEFAULT(0)
-, PRIMARY KEY (codMissao)
-);
-
-
 CREATE TABLE Usuario
 ( codUsuario       SERIAL
 , nmUsuario        VARCHAR(50)
@@ -37,9 +27,11 @@ CREATE TABLE Usuario
 , senha            VARCHAR(50)
 , codSkinPrincipal INT 
 , dataCadastro     TIMESTAMP   DEFAULT(now())
+, dataUltimoAcesso DATE        DEFAULT(now())
 , premium          BOOL        DEFAULT(FALSE)
 , PRIMARY KEY (codUsuario)
 , FOREIGN KEY (codSkinPrincipal) REFERENCES Skin (codSkin)
+, UNIQUE (email)
 );
 
 
@@ -58,32 +50,37 @@ CREATE TABLE Clinica
 
 
 CREATE TABLE UsuarioClinica
-( codClinica      INT
-, codUsuario      INT 
-, nivelSatisfacao SMALLINT 
-, comentario      VARCHAR(300)
-, PRIMARY KEY (codClinica, codUsuario)
+( codUsuarioClinica SERIAL
+, codClinica        INT
+, codUsuario        INT 
+, nivelSatisfacao   SMALLINT 
+, comentario        VARCHAR(300)
+, dataAvaliacao     TIMESTAMP    DEFAULT(now())
+, PRIMARY KEY (codUsuarioClinica)
 , FOREIGN KEY (codClinica) REFERENCES Clinica (codClinica)
 , FOREIGN KEY (codUsuario) REFERENCES Usuario (codUsuario)
 );
 
 
 CREATE TABLE CompraSkin
-( codSkin    INT
-, codUsuario INT
-, valor      INT DEFAULT(0)
-, PRIMARY KEY (codSkin, codUsuario)
+( codCompraSkin SERIAL
+, codSkin       INT
+, codUsuario    INT
+, valor         INT DEFAULT(0)
+, PRIMARY KEY (codCompraSkin)
 , FOREIGN KEY (codSkin)    REFERENCES Skin    (codSkin)
 , FOREIGN KEY (codUsuario) REFERENCES Usuario (codUsuario)
+, UNIQUE (codSkin, codUsuario)
 );
 
 
 CREATE TABLE Humor
-( codUsuario      INT
-, data            DATE
+( codHumor        SERIAL
+, codUsuario      INT
+, dataAvaliacao   DATE           DEFAULT(now())
 , nivelSatisfacao SMALLINT
 , comentario      VARCHAR(300)
-, PRIMARY KEY (codUsuario, data)
+, PRIMARY KEY (codHumor)
 , FOREIGN KEY (codUsuario) REFERENCES Usuario (codUsuario)
 );
 
