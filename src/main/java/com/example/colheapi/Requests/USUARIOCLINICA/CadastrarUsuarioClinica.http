@@ -1,0 +1,10 @@
+POST http://localhost:8080/acolhe/usuarioclinicas/adicionar
+Content-Type: application/json
+
+{
+  "clinica": 2,
+  "usuario": 1,
+  "nivelSatisfacao": 5,
+  "comentario": "Ótimo atendimento!",
+  "dataAvaliacao": "2023-02-01"
+}

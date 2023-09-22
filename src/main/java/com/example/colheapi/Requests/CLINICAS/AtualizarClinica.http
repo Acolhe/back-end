@@ -1,0 +1,13 @@
+PUT http://localhost:8080/acolhe/clinicas/alterar/1
+Content-Type: application/json
+
+{
+  "nmClinica": "Novo Nome da Clínica",
+  "descricao": "Nova Descrição da Clínica",
+  "imagem": "Nova URL da Imagem",
+  "bairro": "Novo Bairro",
+  "cidade": "Nova Cidade",
+  "nmEstado": "Novo Nome do Estado",
+  "sgEstado": "NE",
+  "patrocinada": true
+}

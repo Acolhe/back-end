@@ -1,0 +1,1 @@
+GET http://localhost:8080/acolhe/humor/consultarHumor?idUser=1&data=2023-01-12
