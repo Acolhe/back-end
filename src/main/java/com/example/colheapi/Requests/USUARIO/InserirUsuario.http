@@ -2,13 +2,8 @@ POST http://localhost:8080/acolhe/usuario/inserirUsuario
 Content-Type: application/json
 
 {
-  "nm_usuario": "Fraldinha",
-  "saldo": 1,
-  "dias_consecutivos": 2,
-  "imagem": "200",
-  "telefone": "12",
-  "email": "aaa@gmail.com",
-  "senha": "s",
-  "cod_skin_principal": 2,
-  "premium": true
+  "nmUsuario": "Taaaaaa",
+  "email": "aasdse2",
+  "senha": "cssss2",
+  "codSkinPrincipal": 1
 }

@@ -1,7 +1,7 @@
 package com.example.colheapi.Controllers;
 
 import com.example.colheapi.Classes.HumorDiario;
-import com.example.colheapi.Classes.Usuario;
+import com.example.colheapi.Classes.*;
 import com.example.colheapi.Repositories.HumorDiarioRepository;
 import com.example.colheapi.Repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;

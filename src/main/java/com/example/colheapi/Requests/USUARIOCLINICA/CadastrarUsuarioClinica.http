@@ -2,7 +2,7 @@ POST http://localhost:8080/acolhe/usuarioclinicas/adicionar
 Content-Type: application/json
 
 {
-  "clinica": 2,
+  "clinica": 1,
   "usuario": 1,
   "nivelSatisfacao": 5,
   "comentario": "Ótimo atendimento!",
