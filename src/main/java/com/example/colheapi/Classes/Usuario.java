@@ -41,7 +41,7 @@ public class Usuario {
     private String senha;
 
     @Column(name = "codskinprincipal")
-    private int cod_skin_principal;
+    private Integer cod_skin_principal;
 
     @Column(name = "datacadastro")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
@@ -51,7 +51,7 @@ public class Usuario {
     @Column(name = "premium", columnDefinition = "BOOL DEFAULT FALSE")
     private boolean premium;
 
-    public Usuario(long cod_usuario, String nm_usuario, int saldo, int dias_consecutivos,String email, String senha, int cod_skin_principal, Date data_cadastro, boolean premium) {
+    public Usuario(long cod_usuario, String nm_usuario, int saldo, int dias_consecutivos,String email, String senha, Integer cod_skin_principal, Date data_cadastro, boolean premium) {
         this.cod_usuario = cod_usuario;
         this.nm_usuario = nm_usuario;
         this.saldo = saldo;
@@ -63,14 +63,14 @@ public class Usuario {
         this.premium = premium;
     }
 
-    public Usuario(String nm_usuarioint,String email, String senha, int cod_skin_principal, Date data_cadastro) {
+    public Usuario(String nm_usuarioint,String email, String senha, Integer cod_skin_principal, Date data_cadastro) {
         this.nm_usuario = nm_usuario;
         this.email = email;
         this.senha = senha;
         this.cod_skin_principal = cod_skin_principal;
         this.data_cadastro = data_cadastro;
     }
-    public Usuario(String nm_usuario, int saldo, int dias_consecutivos,String email, String senha, int cod_skin_principal, Date data_cadastro, boolean premium) {
+    public Usuario(String nm_usuario, int saldo, int dias_consecutivos,String email, String senha, Integer cod_skin_principal, Date data_cadastro, boolean premium) {
         this.nm_usuario = nm_usuario;
         this.saldo = saldo;
         this.dias_consecutivos = dias_consecutivos;
@@ -133,11 +133,11 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public int getCodSkinPrincipal() {
+    public Integer getCodSkinPrincipal() {
         return cod_skin_principal;
     }
 
-    public void setCodSkinPrincipal(int cod_skin_principal) {
+    public void setCodSkinPrincipal(Integer cod_skin_principal) {
         this.cod_skin_principal = cod_skin_principal;
     }
 

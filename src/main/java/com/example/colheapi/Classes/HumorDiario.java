@@ -27,7 +27,7 @@ public class HumorDiario {
     private Date data;
 
     @Column(name = "nivelsatisfacao")
-    private int nivelSatisfacao;
+    private Integer nivelSatisfacao;
 
     @Column(name = "comentario", length = 300)
     private String comentario;
@@ -63,11 +63,11 @@ public class HumorDiario {
         this.data = data;
     }
 
-    public int getNivelSatisfacao() {
+    public Integer getNivelSatisfacao() {
         return nivelSatisfacao;
     }
 
-    public void setNivelSatisfacao(int nivelSatisfacao) {
+    public void setNivelSatisfacao(Integer nivelSatisfacao) {
         this.nivelSatisfacao = nivelSatisfacao;
     }
 
@@ -87,7 +87,7 @@ public class HumorDiario {
         this.comentario = comentario;
     }
 
-    public HumorDiario(Long codUsuario, Long codhumor, Date data, int nivelSatisfacao, String comentario, Usuario usuario) {
+    public HumorDiario(Long codUsuario, Long codhumor, Date data, Integer nivelSatisfacao, String comentario, Usuario usuario) {
         this.codUsuario = codUsuario;
         this.codhumor = codhumor;
         this.data = data;

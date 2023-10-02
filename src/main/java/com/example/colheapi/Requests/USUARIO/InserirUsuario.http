@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "nmUsuario": "Taaaaaa",
-  "email": "aasdse2",
+  "email": "hhh",
   "senha": "cssss2",
-  "codSkinPrincipal": 1
+  "codSkinPrincipal": null
 }
