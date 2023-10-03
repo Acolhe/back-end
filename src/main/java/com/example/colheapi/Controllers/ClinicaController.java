@@ -33,12 +33,15 @@ public class ClinicaController {
     }
 
 
+
     @PutMapping("/alterar/{id}")
     public Clinica alterarClinica(@PathVariable Long id, @RequestBody Clinica clinica) {
         Optional<Clinica> existingClinica = clinicaRepository.findById(id);
         if (existingClinica.isPresent()) {
             Clinica updatedClinica = existingClinica.get();
             updatedClinica.setNmClinica(clinica.getNmClinica());
+            updatedClinica.setEmail(clinica.getEmail());
+            updatedClinica.setTelefone(clinica.getTelefone());
             updatedClinica.setDescricao(clinica.getDescricao());
             updatedClinica.setImagem(clinica.getImagem());
             updatedClinica.setBairro(clinica.getBairro());
@@ -51,6 +54,7 @@ public class ClinicaController {
             throw new RuntimeException("Clinica não encontrada com o ID: " + id);
         }
     }
+
 
     @GetMapping("/{id}")
     public Clinica buscarClinicaPorId(@PathVariable Long id) {

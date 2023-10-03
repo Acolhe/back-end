@@ -1,4 +1,5 @@
 package com.example.colheapi.Classes;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -7,13 +8,19 @@ public class Clinica {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "codclinica")
+    @Column(name = "codClinica")
     private Long codClinica;
 
-    @Column(name = "nmclinica", length = 50)
+    @Column(name = "nmClinica", length = 50)
     private String nmClinica;
 
-    @Column(name = "descricao", length = 300)
+    @Column(name = "email", length = 50, unique = true)
+    private String email;
+
+    @Column(name = "telefone", length = 50)
+    private String telefone;
+
+    @Column(name = "descricao", length = 125)
     private String descricao;
 
     @Column(name = "imagem", columnDefinition = "TEXT")
@@ -25,10 +32,10 @@ public class Clinica {
     @Column(name = "cidade", length = 50)
     private String cidade;
 
-    @Column(name = "nmestado", length = 50)
+    @Column(name = "nmEstado", length = 50)
     private String nmEstado;
 
-    @Column(name = "sgestado", length = 2)
+    @Column(name = "sgEstado", length = 2)
     private String sgEstado;
 
     @Column(name = "patrocinada")
@@ -48,6 +55,22 @@ public class Clinica {
 
     public void setNmClinica(String nmClinica) {
         this.nmClinica = nmClinica;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public String getDescricao() {
@@ -106,9 +129,11 @@ public class Clinica {
         this.patrocinada = patrocinada;
     }
 
-    public Clinica(Long codClinica, String nmClinica, String descricao, String imagem, String bairro, String cidade, String nmEstado, String sgEstado, Boolean patrocinada) {
+    public Clinica(Long codClinica, String nmClinica, String email, String telefone, String descricao, String imagem, String bairro, String cidade, String nmEstado, String sgEstado, Boolean patrocinada) {
         this.codClinica = codClinica;
         this.nmClinica = nmClinica;
+        this.email = email;
+        this.telefone = telefone;
         this.descricao = descricao;
         this.imagem = imagem;
         this.bairro = bairro;
