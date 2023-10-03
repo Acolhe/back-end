@@ -2,7 +2,7 @@ POST http://localhost:8080/acolhe/clinicas/adicionar
 Content-Type: application/json
 
 {
-  "nmClinica": "tegte api",
+  "nmClinica": "teste api",
   "email": "api@example.com",
   "telefone": "1234567890",
   "descricao": "hahahahaah",

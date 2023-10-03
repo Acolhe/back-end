@@ -11,13 +11,13 @@ public class Clinica {
     @Column(name = "codClinica")
     private Long codClinica;
 
-    @Column(name = "nmClinica", length = 50)
+    @Column(name = "nmclinica", length = 50)
     private String nmClinica;
 
     @Column(name = "email", length = 50, unique = true)
     private String email;
 
-    @Column(name = "telefone", length = 50)
+    @Column(name = "telefone", length = 50, unique = true)
     private String telefone;
 
     @Column(name = "descricao", length = 125)
@@ -32,10 +32,10 @@ public class Clinica {
     @Column(name = "cidade", length = 50)
     private String cidade;
 
-    @Column(name = "nmEstado", length = 50)
+    @Column(name = "nmestado", length = 50)
     private String nmEstado;
 
-    @Column(name = "sgEstado", length = 2)
+    @Column(name = "sgestado", length = 2)
     private String sgEstado;
 
     @Column(name = "patrocinada")
