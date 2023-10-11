@@ -2,9 +2,9 @@ POST http://localhost:8080/acolhe/clinicas/adicionar
 Content-Type: application/json
 
 {
-  "nmClinica": "teste api",
-  "email": "api@example.com",
-  "telefone": "1234567890",
+  "nmClinica": "tee api",
+  "email": "api@exale.com",
+  "telefone": "12367890",
   "descricao": "hahahahaah",
   "imagem": "URL da Imagem",
   "bairro": "Bairro",
