@@ -20,10 +20,8 @@ public class Usuario {
     @Column(name = "codusuario")
     private long cod_usuario;
 
-    @JsonProperty("nmUsuario")
     @Column(name = "nmusuario", length = 50)
     private String nm_usuario;
-
 
     @Column(name = "dataultimologin")
     private java.util.Date  dataultimologin;
@@ -63,25 +61,8 @@ public class Usuario {
         this.premium = premium;
     }
 
-    public Usuario(String nm_usuarioint,String email, String senha, Integer cod_skin_principal, Date data_cadastro) {
-        this.nm_usuario = nm_usuario;
-        this.email = email;
-        this.senha = senha;
-        this.cod_skin_principal = cod_skin_principal;
-        this.data_cadastro = data_cadastro;
-    }
-    public Usuario(String nm_usuario, int saldo, int dias_consecutivos,String email, String senha, Integer cod_skin_principal, Date data_cadastro, boolean premium) {
-        this.nm_usuario = nm_usuario;
-        this.saldo = saldo;
-        this.dias_consecutivos = dias_consecutivos;
-        this.email = email;
-        this.senha = senha;
-        this.cod_skin_principal = cod_skin_principal;
-        this.data_cadastro = data_cadastro;
-        this.premium = premium;
-    }
-
     public Usuario() {
+
     }
 
     public long getId() {

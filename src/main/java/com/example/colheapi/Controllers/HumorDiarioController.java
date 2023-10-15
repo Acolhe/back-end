@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,6 +26,10 @@ public class HumorDiarioController {
     @Autowired
     public HumorDiarioController(HumorDiarioRepository humorDiarioRepository) {
         this.humorDiarioRepository = humorDiarioRepository;
+    }
+    @GetMapping("/todas")
+    public List<HumorDiario> buscarTodasAsClinicas() {
+        return humorDiarioRepository.findAll();
     }
 
     @PostMapping("/inserirHumor/{idUsuario}")
@@ -45,31 +50,28 @@ public class HumorDiarioController {
 
             boolean humorJaRegistrado = humorDiarioRepository.existsByCodUsuarioAndData(idUsuario, novaDataHumor);
             if (humorJaRegistrado) {
-                return ResponseEntity.badRequest().body(new ApiResponse<>("Humor já registrado hoje"));
+                return ResponseEntity.badRequest().body(new ApiResponse<>("Humor já registrado hoje", null));
             } else {
                 humorDiarioRepository.save(humorDiario);
-                return ResponseEntity.ok(new ApiResponse<>("Humor inserido com sucesso"));
+                return ResponseEntity.ok(new ApiResponse<>("Humor inserido com sucesso", null));
             }
         } else {
-            ApiResponse errorResponse = new ApiResponse("Usuário não encontrado com o ID: " + idUsuario);
+            ApiResponse<String> errorResponse = new ApiResponse<>("Usuário não encontrado com o ID: " + idUsuario, null);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
-
-
 
     @DeleteMapping("/excluirHumor/{id}")
     public ResponseEntity<ApiResponse<String>> excluirHumor(@PathVariable Long id) {
         if (humorDiarioRepository.existsById(id)) {
             humorDiarioRepository.deleteById(id);
-            ApiResponse<String> successResponse = new ApiResponse<>("Humor excluído com sucesso");
+            ApiResponse<String> successResponse = new ApiResponse<>("Humor excluído com sucesso", null);
             return ResponseEntity.ok(successResponse);
         } else {
-            ApiResponse<String> errorResponse = new ApiResponse<>("Humor não encontrado");
+            ApiResponse<String> errorResponse = new ApiResponse<>("Humor não encontrado", null);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
-
 
     @GetMapping("/consultarHumor")
     public ResponseEntity<ApiResponse<HumorDiario>> consultarHumorPorIdEData(
@@ -78,10 +80,11 @@ public class HumorDiarioController {
         Optional<HumorDiario> humorOptional = humorDiarioRepository.findByCodUsuarioAndData(idUser, data);
 
         if (humorOptional.isPresent()) {
-            ApiResponse<HumorDiario> successResponse = new ApiResponse<>("Humor consultado com sucesso");
+            HumorDiario humor = humorOptional.get();
+            ApiResponse<HumorDiario> successResponse = new ApiResponse<>("Humor consultado com sucesso", humor);
             return ResponseEntity.ok(successResponse);
         } else {
-            ApiResponse<HumorDiario> errorResponse = new ApiResponse<>("Humor não encontrado");
+            ApiResponse<HumorDiario> errorResponse = new ApiResponse<>("Humor não encontrado", null);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }

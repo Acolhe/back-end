@@ -22,11 +22,13 @@ import java.util.Optional;
 public class UsuarioClinicaController {
 
     private final UsuarioClinicaRepository usuarioClinicaRepository;
+
     @Autowired
     private UsuarioRepository usuarioRepository;
 
     @Autowired
     private ClinicaRepository clinicaRepository;
+
     @Autowired
     public UsuarioClinicaController(UsuarioClinicaRepository usuarioClinicaRepository) {
         this.usuarioClinicaRepository = usuarioClinicaRepository;
@@ -40,7 +42,7 @@ public class UsuarioClinicaController {
     @GetMapping("/buscarPorId/{id}")
     public UsuarioClinica buscarClinicaPorId(@PathVariable Long id) {
         return usuarioClinicaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário da clinica não encontrada com o ID: " + id));
+                .orElseThrow(() -> new RuntimeException("Usuário da clínica não encontrado com o ID: " + id));
     }
 
     @PostMapping("/adicionar")
@@ -59,15 +61,15 @@ public class UsuarioClinicaController {
 
             boolean usuarioClinicaJaRegistrado = usuarioClinicaRepository.existsByUsuarioAndClinica(usuarioClinica.getUsuario(), usuarioClinica.getClinica());
             if (usuarioClinicaJaRegistrado) {
-                ApiResponse<String> errorResponse = new ApiResponse<>("Avaliação para essa clínica já registrada por esse usuário");
+                ApiResponse<String> errorResponse = new ApiResponse<>("Avaliação para essa clínica já registrada por esse usuário", null);
                 return ResponseEntity.badRequest().body(errorResponse);
             } else {
                 usuarioClinicaRepository.save(usuarioClinica);
-                ApiResponse<String> successResponse = new ApiResponse<>("Avaliação inserida com sucesso");
+                ApiResponse<String> successResponse = new ApiResponse<>("Avaliação inserida com sucesso", null);
                 return ResponseEntity.ok(successResponse);
             }
         } else {
-            ApiResponse<String> errorResponse = new ApiResponse<>("Usuário ou clínica não encontrados");
+            ApiResponse<String> errorResponse = new ApiResponse<>("Usuário ou clínica não encontrados", null);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
@@ -76,10 +78,10 @@ public class UsuarioClinicaController {
     public ResponseEntity<ApiResponse<String>> deleteUsuarioClinica(@PathVariable Long id) {
         if (usuarioClinicaRepository.existsById(id)) {
             usuarioClinicaRepository.deleteById(id);
-            ApiResponse<String> successResponse = new ApiResponse<>("Avaliação excluída com sucesso");
+            ApiResponse<String> successResponse = new ApiResponse<>("Avaliação excluída com sucesso", null);
             return ResponseEntity.ok(successResponse);
         } else {
-            ApiResponse<String> errorResponse = new ApiResponse<>("Avaliação não encontrada");
+            ApiResponse<String> errorResponse = new ApiResponse<>("Avaliação não encontrada", null);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }

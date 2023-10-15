@@ -3,8 +3,9 @@ import com.example.colheapi.Classes.ApiResponse;
 import com.example.colheapi.Classes.Usuario;
 import com.example.colheapi.Repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.*;
 
 @RestController
@@ -19,11 +20,11 @@ public class UsuarioController {
     }
 
     @PostMapping("/inserirUsuario")
-    public ApiResponse<String> inserirUsuario(@RequestBody Usuario usuario) {
+    public ResponseEntity<ApiResponse<String>> inserirUsuario(@RequestBody Usuario usuario) {
         List<Usuario> usuarios = usuarioRepository.findAll();
         for (Usuario user : usuarios) {
             if (user.getEmail().equals(usuario.getEmail())) {
-                return new ApiResponse<>("Alguém já está usando esse email");
+                return ResponseEntity.badRequest().body(new ApiResponse<>("Alguém já está usando esse email", null));
             }
         }
         java.util.Date utilDate = new java.util.Date();
@@ -31,11 +32,11 @@ public class UsuarioController {
         usuario.setDataCadastro(sqlDate);
         usuario.setDataultimologin(sqlDate);
         usuarioRepository.save(usuario);
-        return new ApiResponse<>("Usuário inserido com sucesso");
+        return ResponseEntity.ok(new ApiResponse<>("Usuário inserido com sucesso", null));
     }
 
     @PutMapping("/alterarCadastro/{id}")
-    public ApiResponse<String> atualizarCadastro(@PathVariable Long id, @RequestBody Usuario usuarioAtualizado) {
+    public ResponseEntity<ApiResponse<String>> atualizarCadastro(@PathVariable Long id, @RequestBody Usuario usuarioAtualizado) {
         Optional<Usuario> usuarioAlterado = usuarioRepository.findById(id);
         if (usuarioAlterado.isPresent()) {
             Usuario usuario = usuarioAlterado.get();
@@ -48,39 +49,39 @@ public class UsuarioController {
             usuario.setPremium(usuarioAtualizado.isPremium());
             usuarioRepository.save(usuario);
 
-            return new ApiResponse<>("Usuário com o id "+ id +" Alterado com sucesso");
+            return ResponseEntity.ok(new ApiResponse<>("Usuário com o id "+ id +" Alterado com sucesso", null));
         } else {
-            return new ApiResponse<>("Usuário com o id " + id + " não encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>("Usuário com o id " + id + " não encontrado", null));
         }
     }
 
     @PutMapping("/assinarPlano/{id}")
-    public ApiResponse<String> assinarPlano(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<String>> assinarPlano(@PathVariable Long id) {
         Optional<Usuario> usuarioAlterado = usuarioRepository.findById(id);
 
         if (usuarioAlterado.isPresent()) {
             Usuario usuario = usuarioAlterado.get();
             if (usuario.isPremium()) {
-                return new ApiResponse<>("O usuário " + id + " já é premium.");
+                return ResponseEntity.badRequest().body(new ApiResponse<>("O usuário " + id + " já é premium.", null));
             } else {
                 usuario.setPremium(!usuario.isPremium());
                 usuarioRepository.save(usuario);
-                return new ApiResponse<>("Usuário " + id + " AGORA é premium");
+                return ResponseEntity.ok(new ApiResponse<>("Usuário " + id + " AGORA é premium", null));
             }
         } else {
-            return new ApiResponse<>("Usuário não encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>("Usuário não encontrado", null));
         }
     }
 
     @GetMapping("saldo/{id}")
-    public ApiResponse<String> retornarSaldo(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<String>> retornarSaldo(@PathVariable Long id) {
         Optional<Usuario> usuarioAlterado = usuarioRepository.findById(id);
         if (usuarioAlterado.isPresent()) {
             Usuario usuario = usuarioAlterado.get();
             String saldoMessage = "O saldo do usuário é: " + usuario.getSaldo();
-            return new ApiResponse<>(saldoMessage);
+            return ResponseEntity.ok(new ApiResponse<>(saldoMessage, null));
         } else {
-            return new ApiResponse<>("Usuário não encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>("Usuário não encontrado", null));
         }
     }
 
@@ -90,7 +91,7 @@ public class UsuarioController {
     }
 
     @GetMapping("byEmailSenha/{email}/{senha}")
-    public Usuario getByEmail(@PathVariable String email, @PathVariable String senha) {
+    public ResponseEntity<Usuario> getByEmail(@PathVariable String email, @PathVariable String senha) {
         List<Usuario> usuarios = usuarioRepository.findbyEmailSenha(email, senha);
         Calendar calendar = Calendar.getInstance();
         Calendar calendarData = Calendar.getInstance();
@@ -119,35 +120,35 @@ public class UsuarioController {
             }
             usuario.setDataultimologin(new Date());
             usuarioRepository.save(usuario);
-            return usuario;
+            return ResponseEntity.ok(usuario);
         }else{
             return null;
         }
     }
 
     @GetMapping("ofensiva/{id}")
-    public ApiResponse<String> retornarOfensiva(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<String>> retornarOfensiva(@PathVariable Long id) {
         Optional<Usuario> usuarioAlterado = usuarioRepository.findById(id);
         if (usuarioAlterado.isPresent()) {
             Usuario usuario = usuarioAlterado.get();
             String ofensivaMessage = "As ofensivas do usuário são: " + usuario.getDiasConsecutivos();
-            return new ApiResponse<>(ofensivaMessage);
+            return ResponseEntity.ok(new ApiResponse<>(ofensivaMessage, null));
         } else {
-            return new ApiResponse<>("Usuário não encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>("Usuário não encontrado", null));
         }
     }
 
     @PutMapping("aumentarSaldo/{id}/{valor}")
-    public ApiResponse<String> aumentarSaldo(@PathVariable Long id, @PathVariable int valor){
+    public ResponseEntity<ApiResponse<String>> aumentarSaldo(@PathVariable Long id, @PathVariable int valor){
         Optional<Usuario> usuarioAlterado = usuarioRepository.findById(id);
         if(usuarioAlterado.isPresent()){
             Usuario usuario = usuarioAlterado.get();
             usuario.setSaldo(usuario.getSaldo()+valor);
             String retorno = "O novo saldo do usuario é: " + usuario.getSaldo();
             usuarioRepository.save(usuario);
-            return new ApiResponse<>(retorno);
+            return ResponseEntity.ok(new ApiResponse<>(retorno, null));
         }else{
-            return new ApiResponse<>("Usuário não encontrado");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>("Usuário não encontrado", null));
         }
     }
 }
