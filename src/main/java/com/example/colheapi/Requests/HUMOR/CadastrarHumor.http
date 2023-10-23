@@ -1,10 +1,10 @@
-POST http://localhost:8080/acolhe/humor/inserirHumor/1
+POST http://localhost:8080/acolhe/humor/inserirHumor/2
 Content-Type: application/json
 
 {
 "data": "2023-01-12",
-"nivelSatisfacao": 5,
-"comentario": "Ótimo!"
+"nivelSatisfacao": 1,
+"comentario": "Ruim!"
 }
 
 
