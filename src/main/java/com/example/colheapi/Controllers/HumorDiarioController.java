@@ -88,4 +88,17 @@ public class HumorDiarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
+
+    @GetMapping("/todosHumoresPorUsuario/{idUsuario}")
+    public ResponseEntity<ApiResponse<List<HumorDiario>>> buscarTodasAsClinicasPorUsuario(@PathVariable Long idUsuario) {
+        List<HumorDiario> humores = humorDiarioRepository.findByCodUsuario(idUsuario);
+
+        if (!humores.isEmpty()) {
+            ApiResponse<List<HumorDiario>> successResponse = new ApiResponse<>("Humores consultados com sucesso", humores);
+            return ResponseEntity.ok(successResponse);
+        } else {
+            ApiResponse<List<HumorDiario>> errorResponse = new ApiResponse<>("Nenhum humor encontrado para o usuário", null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
+    }
 }
