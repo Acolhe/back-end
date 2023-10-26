@@ -72,6 +72,20 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>("Usuário não encontrado", null));
         }
     }
+    @PutMapping("/alterarCodSkinUsuario/{id}/{codSkinUsuario}")
+    public ResponseEntity<ApiResponse<String>> atualizarCodSkinUsuario(@PathVariable Long id, @PathVariable int codSkinUsuario) {
+        Optional<Usuario> usuarioAlterado = usuarioRepository.findById(id);
+
+        if (usuarioAlterado.isPresent()) {
+            Usuario usuario = usuarioAlterado.get();
+            usuario.setCodSkinPrincipal(codSkinUsuario);
+            usuarioRepository.save(usuario);
+
+            return ResponseEntity.ok(new ApiResponse<>("Código de skin do usuário com o ID " + id + " alterado com sucesso", null));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>("Usuário com o ID " + id + " não encontrado", null));
+        }
+    }
 
     @GetMapping("saldo/{id}")
     public ResponseEntity<ApiResponse<String>> retornarSaldo(@PathVariable Long id) {
