@@ -1,22 +1,35 @@
 package com.example.colheapi.Controllers;
 import com.example.colheapi.Classes.ApiResponse;
+import com.example.colheapi.Classes.HumorDiario;
 import com.example.colheapi.Classes.Usuario;
+import com.example.colheapi.Classes.UsuarioComHumoresDTO;
+import com.example.colheapi.Repositories.HumorDiarioRepository;
 import com.example.colheapi.Repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/acolhe/usuario")
 public class UsuarioController {
 
     public final UsuarioRepository usuarioRepository;
+    private HumorDiarioRepository humorDiarioRepository;
 
     @Autowired
-    public UsuarioController(UsuarioRepository usuarioRepository){
+    public void HumorDiarioController(HumorDiarioRepository humorDiarioRepository) {
+        this.humorDiarioRepository = humorDiarioRepository;
+    }
+
+    @Autowired
+    public UsuarioController(UsuarioRepository usuarioRepository, HumorDiarioRepository humorDiarioRepository){
         this.usuarioRepository = usuarioRepository;
+        this.humorDiarioRepository = humorDiarioRepository;
     }
 
     @PostMapping("/inserirUsuario")
@@ -163,6 +176,19 @@ public class UsuarioController {
             return ResponseEntity.ok(new ApiResponse<>(retorno, null));
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse<>("Usuário não encontrado", null));
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<UsuarioComHumoresDTO>> encontrarUsuarioPorId(@PathVariable Long id) {
+        Optional<Usuario> usuario = usuarioRepository.findById(id);
+        if (usuario.isPresent()) {
+            Usuario usuarioEncontrado = usuario.get();
+            List<HumorDiario> humores = humorDiarioRepository.findByCodUsuario(id);
+            UsuarioComHumoresDTO usuarioHumorDTO = new UsuarioComHumoresDTO(usuarioEncontrado, humores);
+            return ResponseEntity.ok(new ApiResponse<>("Usuário encontrado com sucesso", usuarioHumorDTO));
+        } else {
+            return ResponseEntity.ok(new ApiResponse<>("Usuário não encontrado", null));
         }
     }
 }
