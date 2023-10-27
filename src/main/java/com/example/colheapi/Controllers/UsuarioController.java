@@ -49,11 +49,11 @@ public class UsuarioController {
     }
 
     @PutMapping("/alterarCadastro/{id}")
-    public ResponseEntity<ApiResponse<String>> atualizarCadastro(@PathVariable Long id, @RequestBody Usuario usuarioAtualizado) {
+    public ResponseEntity<ApiResponse<String>> atualizarCadastro(@PathVariable Long id, @RequestBody String nome) {
         Optional<Usuario> usuarioAlterado = usuarioRepository.findById(id);
         if (usuarioAlterado.isPresent()) {
             Usuario usuario = usuarioAlterado.get();
-            usuario.setNome(usuarioAtualizado.getNome());
+            usuario.setNome(nome);
             usuarioRepository.save(usuario);
 
             return ResponseEntity.ok(new ApiResponse<>("Usuário com o id "+ id +" Alterado com sucesso", null));
