@@ -54,12 +54,6 @@ public class UsuarioController {
         if (usuarioAlterado.isPresent()) {
             Usuario usuario = usuarioAlterado.get();
             usuario.setNome(usuarioAtualizado.getNome());
-            usuario.setSaldo(usuarioAtualizado.getSaldo());
-            usuario.setDiasConsecutivos(usuario.getDiasConsecutivos());
-            usuario.setEmail(usuarioAtualizado.getEmail());
-            usuario.setSenha(usuarioAtualizado.getSenha());
-            usuario.setCodSkinPrincipal(usuarioAtualizado.getCodSkinPrincipal());
-            usuario.setPremium(usuarioAtualizado.isPremium());
             usuarioRepository.save(usuario);
 
             return ResponseEntity.ok(new ApiResponse<>("Usuário com o id "+ id +" Alterado com sucesso", null));
