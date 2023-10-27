@@ -1,4 +1,5 @@
 # Deploy da API (Back-End) do projeto via Pipeline
+# Para testes, será utilizado na branch DEV
 # Somente na branch "PROD", por se tratar justamente do ambiente de produção.
 # Acesso em https://api-acolhe.onrender.com
 # Matplace utilizado: Render Deploy Action by johnbeynon
@@ -8,9 +9,9 @@ name: Deploy API-Acolhe
 
 on: 
   push:
-    branches: [ "PROD"  ]
+    branches: [ "DEV"  ]
   pull_request:
-    branches: [ "PROD"  ]
+    branches: [ "DEV"  ]
     
 jobs:
   
