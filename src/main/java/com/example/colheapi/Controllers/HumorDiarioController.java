@@ -50,7 +50,7 @@ public class HumorDiarioController {
 
             boolean humorJaRegistrado = humorDiarioRepository.existsByCodUsuarioAndData(idUsuario, novaDataHumor);
             if (humorJaRegistrado) {
-                return ResponseEntity.badRequest().body(new ApiResponse<>("Humor já registrado hoje", null));
+                return ResponseEntity.ok(new ApiResponse<>("Humor já registrado hoje", null));
             } else {
                 humorDiarioRepository.save(humorDiario);
                 return ResponseEntity.ok(new ApiResponse<>("Humor inserido com sucesso", null));
