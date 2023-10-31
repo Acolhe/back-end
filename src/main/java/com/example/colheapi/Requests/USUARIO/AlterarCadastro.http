@@ -1,10 +1,9 @@
-POST http://localhost:8080/acolhe/usuario/
+PUT http://localhost:8080/acolhe/usuario/alterarCadastro/1
 Content-Type: application/json
 
 {
-  "nm_usuario": " Fraldinha",
+  "nmUsuario": "Fraldvhvgvhinha",
   "saldo": 1,
-  "dias_consecutivos": 2,
   "imagem": "200",
   "telefone": "12",
   "email": "aaa@gmail.com",

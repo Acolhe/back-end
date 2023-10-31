@@ -20,10 +20,9 @@ public class Usuario {
     @Column(name = "codusuario")
     private long cod_usuario;
 
-    @JsonProperty("nmUsuario")
     @Column(name = "nmusuario", length = 50)
-    private String nm_usuario;
-
+    @JsonProperty("nmusuario")
+    private String nmusuario;
 
     @Column(name = "dataultimologin")
     private java.util.Date  dataultimologin;
@@ -51,27 +50,9 @@ public class Usuario {
     @Column(name = "premium", columnDefinition = "BOOL DEFAULT FALSE")
     private boolean premium;
 
-    public Usuario(long cod_usuario, String nm_usuario, int saldo, int dias_consecutivos,String email, String senha, Integer cod_skin_principal, Date data_cadastro, boolean premium) {
+    public Usuario(long cod_usuario, String nmusuario, int saldo, int dias_consecutivos,String email, String senha, Integer cod_skin_principal, Date data_cadastro, boolean premium) {
         this.cod_usuario = cod_usuario;
-        this.nm_usuario = nm_usuario;
-        this.saldo = saldo;
-        this.dias_consecutivos = dias_consecutivos;
-        this.email = email;
-        this.senha = senha;
-        this.cod_skin_principal = cod_skin_principal;
-        this.data_cadastro = data_cadastro;
-        this.premium = premium;
-    }
-
-    public Usuario(String nm_usuarioint,String email, String senha, Integer cod_skin_principal, Date data_cadastro) {
-        this.nm_usuario = nm_usuario;
-        this.email = email;
-        this.senha = senha;
-        this.cod_skin_principal = cod_skin_principal;
-        this.data_cadastro = data_cadastro;
-    }
-    public Usuario(String nm_usuario, int saldo, int dias_consecutivos,String email, String senha, Integer cod_skin_principal, Date data_cadastro, boolean premium) {
-        this.nm_usuario = nm_usuario;
+        this.nmusuario = nmusuario;
         this.saldo = saldo;
         this.dias_consecutivos = dias_consecutivos;
         this.email = email;
@@ -82,6 +63,7 @@ public class Usuario {
     }
 
     public Usuario() {
+
     }
 
     public long getId() {
@@ -93,11 +75,11 @@ public class Usuario {
     }
 
     public String getNome() {
-        return nm_usuario;
+        return nmusuario;
     }
 
     public void setNome(String nm_usuario) {
-        this.nm_usuario = nm_usuario;
+        this.nmusuario = nm_usuario;
     }
 
     public int getSaldo() {
@@ -170,7 +152,7 @@ public class Usuario {
     public String toString() {
         return "Usuario{" +
                 "cod_usuario=" + cod_usuario +
-                ", nm_usuario='" + nm_usuario + '\'' +
+                ", nm_usuario='" + nmusuario + '\'' +
                 ", dataultimologin=" + dataultimologin +
                 ", saldo=" + saldo +
                 ", dias_consecutivos=" + dias_consecutivos +

@@ -23,7 +23,7 @@ public class HumorDiario {
 
     @Temporal(TemporalType.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
-    @Column(name = "data")
+    @Column(name = "dataavaliacao")
     private Date data;
 
     @Column(name = "nivelsatisfacao")
