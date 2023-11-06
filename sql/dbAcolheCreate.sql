@@ -47,7 +47,7 @@ CREATE TABLE Clinica
 , nmEstado         VARCHAR(50)
 , sgEstado         VARCHAR(2)
 , patrocinada      BOOL         DEFAULT (FALSE)
-, nivelSatisfacao  SMALLINT
+, nivelSatisfacao  SMALLINT     DEFAULT (0)
 , PRIMARY KEY (codClinica)
 , UNIQUE (email)
 , UNIQUE (telefone)
