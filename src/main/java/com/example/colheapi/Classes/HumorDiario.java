@@ -87,9 +87,8 @@ public class HumorDiario {
         this.comentario = comentario;
     }
 
-    public HumorDiario(Long codUsuario, Long codhumor, Date data, Integer nivelSatisfacao, String comentario, Usuario usuario) {
+    public HumorDiario(Long codUsuario, Date data, Integer nivelSatisfacao, String comentario, Usuario usuario) {
         this.codUsuario = codUsuario;
-        this.codhumor = codhumor;
         this.data = data;
         this.nivelSatisfacao = nivelSatisfacao;
         this.comentario = comentario;
