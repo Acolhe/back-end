@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ClinicaRepository extends JpaRepository<Clinica, Long> {
     Optional<Clinica> findByNmClinica(String nmClinica);
+    Optional<Clinica> findByEmail(String email);
 }

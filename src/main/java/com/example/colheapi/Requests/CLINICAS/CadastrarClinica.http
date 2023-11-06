@@ -2,14 +2,15 @@ POST http://localhost:8080/acolhe/clinicas/adicionar
 Content-Type: application/json
 
 {
-  "nmClinica": "tee adssa",
-  "email": "api@exalse.ascom",
-  "telefone": "12367122890",
-  "descricao": "hahahahaah",
+  "nmClinica": "tee a3ddkfjkghssa",
+  "email": "api@alse.asjjcom",
+  "telefone": "123678712j2890",
+  "descricao": "hahahjahaah",
   "imagem": "URL da Imagem",
   "bairro": "Bairro",
   "cidade": "Cidade",
   "nmEstado": "Nome do Estado",
   "sgEstado": "sp",
-  "patrocinada": true
+  "patrocinada": true,
+  "nivelSatisfacao": 4
 }
