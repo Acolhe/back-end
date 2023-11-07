@@ -2,8 +2,8 @@ POST http://localhost:8080/acolhe/usuario/inserirUsuario
 Content-Type: application/json
 
 {
-  "nmusuario": "zdvdc",
-  "email": "sdssdfdds",
-  "senha": "fedfsfe",
+  "nmusuario": "zdvdasc",
+  "email": "as",
+  "senha": "as",
   "codSkinPrincipal": null
 }

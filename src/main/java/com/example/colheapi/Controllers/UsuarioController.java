@@ -112,7 +112,7 @@ public class UsuarioController {
     }
 
     @GetMapping("byEmailSenha/{email}/{senha}")
-    public ResponseEntity<Usuario> getByEmail(@PathVariable String email, @PathVariable String senha) {
+    public ResponseEntity<UsuarioComHumoresDTO> getByEmail(@PathVariable String email, @PathVariable String senha) {
         List<Usuario> usuarios = usuarioRepository.findbyEmailSenha(email, senha);
         Calendar calendar = Calendar.getInstance();
         Calendar calendarData = Calendar.getInstance();
@@ -141,7 +141,9 @@ public class UsuarioController {
             }
             usuario.setDataultimologin(new Date());
             usuarioRepository.save(usuario);
-            return ResponseEntity.ok(usuario);
+            List<HumorDiario> humores = humorDiarioRepository.findByCodUsuario(usuario.getId());
+            UsuarioComHumoresDTO usuarioHumorDTO = new UsuarioComHumoresDTO(usuario, humores);
+            return ResponseEntity.ok(usuarioHumorDTO);
         }else{
             return null;
         }
