@@ -10,9 +10,9 @@ INSERT INTO Usuario (nmUsuario, email, senha)
 		 , ('Matheus Pedrosa Mendes da Costa', 'matheus.costa@gmail.com', 'a12')
 		 , ('usuario2023', 'user@gmail.com', '123');
 
-INSERT INTO Clinica (nmClinica, email, telefone, descricao, bairro, cidade, nmEstado, sgEstado)
-     VALUES ('Aquarela de Emoções', 'aquarelasupport@gmail.com', '(11) 99405-5399', 'Consultório de psicologia especializado no acompanhamento psicoterapêutico de crianças e adolescentes.', 'Bela Vista', 'Osasco', 'São Paulo', 'SP')
-	      , ('Clinica Psicológica de Emoções', 'clinica@gmail.com', '(11) 95411-0128', NULL, 'Pirituba', 'São Paulo', 'São Paulo', 'SP');
+INSERT INTO Clinica (nmClinica, email, telefone, descricao, bairro, cidade, nmEstado, sgEstado, nivelSatisfacao)
+     VALUES ('Aquarela de Emoções', 'aquarelasupport@gmail.com', '(11) 99405-5399', 'Consultório de psicologia especializado no acompanhamento psicoterapêutico de crianças e adolescentes.', 'Bela Vista', 'Osasco', 'São Paulo', 'SP', 5)
+	      , ('Clinica Psicológica de Emoções', 'clinica@gmail.com', '(11) 95411-0128', NULL, 'Pirituba', 'São Paulo', 'São Paulo', 'SP', 3);
 
 DO $$
 DECLARE
