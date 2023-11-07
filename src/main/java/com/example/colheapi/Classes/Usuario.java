@@ -50,8 +50,7 @@ public class Usuario {
     @Column(name = "premium", columnDefinition = "BOOL DEFAULT FALSE")
     private boolean premium;
 
-    public Usuario(long cod_usuario, String nmusuario, int saldo, int dias_consecutivos,String email, String senha, Integer cod_skin_principal, Date data_cadastro, boolean premium) {
-        this.cod_usuario = cod_usuario;
+    public Usuario(String nmusuario, int saldo, int dias_consecutivos,String email, String senha, Integer cod_skin_principal, Date data_cadastro, boolean premium) {
         this.nmusuario = nmusuario;
         this.saldo = saldo;
         this.dias_consecutivos = dias_consecutivos;

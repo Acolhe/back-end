@@ -3,6 +3,7 @@ package com.example.colheapi.Controllers;
 import com.example.colheapi.Classes.*;
 import com.example.colheapi.Repositories.ClinicaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,15 +23,23 @@ public class ClinicaController {
 
     @PostMapping("/adicionar")
     public ResponseEntity<ApiResponse<String>> adicionarClinica(@RequestBody Clinica clinica) {
-        Optional<Clinica> existingClinica = clinicaRepository.findByNmClinica(clinica.getNmClinica());
+        Optional<Clinica> existingClinicaByEmail = clinicaRepository.findByEmail(clinica.getEmail());
+        Optional<Clinica> existingClinicaByNome = clinicaRepository.findByNmClinica(clinica.getNmClinica());
 
-        if (existingClinica.isPresent()) {
-            return ResponseEntity.badRequest().body(new ApiResponse<>("A clínica já foi adicionada anteriormente", null));
+        if (existingClinicaByEmail.isPresent()) {
+            return ResponseEntity.badRequest().body(new ApiResponse<>("O e-mail já está em uso por outra clínica", null));
+        } else if (existingClinicaByNome.isPresent()) {
+            return ResponseEntity.badRequest().body(new ApiResponse<>("O nome da clínica já está em uso por outra clínica", null));
         } else {
-            Clinica savedClinica = clinicaRepository.save(clinica);
-            return ResponseEntity.ok(new ApiResponse<>("Clínica adicionada com sucesso", null));
+            try {
+                Clinica savedClinica = clinicaRepository.save(clinica);
+                return ResponseEntity.ok(new ApiResponse<>("Clínica adicionada com sucesso", null));
+            } catch (DataIntegrityViolationException e) {
+                return ResponseEntity.badRequest().body(new ApiResponse<>("Erro ao adicionar a clínica: Dados duplicados", null));
+            }
         }
     }
+
 
     @PutMapping("/alterar/{id}")
     public ResponseEntity<ApiResponse<String>> alterarClinica(@PathVariable Long id, @RequestBody Clinica clinica) {
@@ -47,6 +56,7 @@ public class ClinicaController {
             updatedClinica.setNmEstado(clinica.getNmEstado());
             updatedClinica.setSgEstado(clinica.getSgEstado());
             updatedClinica.setPatrocinada(clinica.getPatrocinada());
+            updatedClinica.setNivelSatisfacao(clinica.getNivelSatisfacao());
             clinicaRepository.save(updatedClinica);
             return ResponseEntity.ok(new ApiResponse<>("Clínica alterada com sucesso", null));
         } else {

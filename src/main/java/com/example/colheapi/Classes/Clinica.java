@@ -8,7 +8,7 @@ public class Clinica {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "codClinica")
+    @Column(name = "codclinica")
     private Long codClinica;
 
     @Column(name = "nmclinica", length = 50)
@@ -41,6 +41,9 @@ public class Clinica {
     @Column(name = "patrocinada")
     private Boolean patrocinada;
 
+    @Column(name = "nivelsatisfacao")
+    private int nivelSatisfacao;
+
     public Long getCodClinica() {
         return codClinica;
     }
@@ -51,6 +54,14 @@ public class Clinica {
 
     public String getNmClinica() {
         return nmClinica;
+    }
+
+    public int getNivelSatisfacao() {
+        return nivelSatisfacao;
+    }
+
+    public void setNivelSatisfacao(int nivelsatisfacao) {
+        this.nivelSatisfacao =  nivelsatisfacao;
     }
 
     public void setNmClinica(String nmClinica) {
@@ -129,8 +140,7 @@ public class Clinica {
         this.patrocinada = patrocinada;
     }
 
-    public Clinica(Long codClinica, String nmClinica, String email, String telefone, String descricao, String imagem, String bairro, String cidade, String nmEstado, String sgEstado, Boolean patrocinada) {
-        this.codClinica = codClinica;
+    public Clinica(String nmClinica, String email, String telefone, String descricao, String imagem, String bairro, String cidade, String nmEstado, String sgEstado, Boolean patrocinada, int nivelsatisfacao) {
         this.nmClinica = nmClinica;
         this.email = email;
         this.telefone = telefone;
@@ -141,6 +151,7 @@ public class Clinica {
         this.nmEstado = nmEstado;
         this.sgEstado = sgEstado;
         this.patrocinada = patrocinada;
+        this.nivelSatisfacao = nivelsatisfacao;
     }
 
     public Clinica(){
