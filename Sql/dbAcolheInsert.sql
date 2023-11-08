@@ -1,4 +1,5 @@
 DELETE FROM Humor;
+DELETE FROM UsuarioClinica;
 DELETE FROM Clinica;
 DELETE FROM Usuario;
 
@@ -9,11 +10,9 @@ INSERT INTO Usuario (nmUsuario, email, senha)
 		 , ('Matheus Pedrosa Mendes da Costa', 'matheus.costa@gmail.com', 'a12')
 		 , ('usuario2023', 'user@gmail.com', '123');
 
-INSERT INTO Clinica (nmClinica, email, telefone, descricao, imagem, bairro, cidade, nmEstado, sgEstado, patrocinada, nivelsatisfacao)
-     VALUES ('Aquarela de Emoções', 'aquarelasupport@gmail.com', '(11) 99405-5399', 'Consultório de psicologia especializado no acompanhamento psicoterapêutico de crianças e adolescentes.', 'https://www.cloudia.com.br/wp-content/uploads/2020/08/hospital_infantil_3-1024x775.jpg', 'Bela Vista', 'Osasco', 'São Paulo', 'SP', true, 5)
-	      , ('Clinica Psicológica de Emoções', 'administrativo314832@gmail.com', '(11) 95411-0128', 'Atendimentos a adolescentes, adultos, idosos, individual e casal.', 'https://www.amplimed.com.br/wp-content/uploads/2021/11/diferenca_consultorio_clinica_centro_blog.jpeg', 'Pirituba', 'São Paulo', 'São Paulo', 'SP', false, 3)
-		  , ('CENTRO PSICOLÓGICO ESSÊNCIA VIVA', 'clinica.viva@essenciaviva.com', '11987654321', 'NO CENTRO PSICOLÓGICO ESSÊNCIA VIVA, ACREDITAMOS QUE CADA PESSOA TEM UMA ESSÊNCIA VIVA', 'https://goclinica.com.br/wp-content/uploads/2022/01/5-min.jpg', 'JARDINS', 'SÃO PAULO', 'São Paulo', 'SP', false, 4)
-		  , ('CLÍNICA DA ALMA LIVRE', 'alma@livre.com', '11223344556', 'NA CLÍNICA DA ALMA LIVRE, BUSCAMOS LIBERAR A ALMA DE SUAS AMARRAS EMOCIONAIS. NOSSA EQUIPE DE PSICÓLOGOS ESTÁ PRONTA PARA AJU', 'https://www.psicologosberrini.com.br/wp-content/uploads/cropped-consultorio-psicologa-1-1024x576.jpg', 'FLORES DA PAZ', 'CAMPINAS', 'São Paulo', 'SP', true, 5);
+INSERT INTO Clinica (nmClinica, email, telefone, descricao, bairro, cidade, nmEstado, sgEstado)
+     VALUES ('Aquarela de Emoções', 'aquarelasupport@gmail.com', '(11) 99405-5399', 'Consultório de psicologia especializado no acompanhamento psicoterapêutico de crianças e adolescentes.', 'Bela Vista', 'Osasco', 'São Paulo', 'SP')
+	      , ('Clinica Psicológica de Emoções', 'clinica@gmail.com', '(11) 95411-0128', NULL, 'Pirituba', 'São Paulo', 'São Paulo', 'SP');
 
 DO $$
 DECLARE
@@ -22,7 +21,24 @@ DECLARE
     coduser3 INT := (SELECT codUsuario FROM Usuario LIMIT 1 OFFSET 2);
     coduser4 INT := (SELECT codUsuario FROM Usuario LIMIT 1 OFFSET 3);
     coduser5 INT := (SELECT codUsuario FROM Usuario LIMIT 1 OFFSET 4);
-BEGIN		  
+BEGIN
+
+INSERT INTO UsuarioClinica (codClinica
+						  , codUsuario
+						  , nivelSatisfacao
+						  , comentario)
+     VALUES ((SELECT codClinica FROM Clinica LIMIT 1 OFFSET 0), coduser1, 5, 'Adorei essa Clínca')
+ 	      , ((SELECT codClinica FROM Clinica LIMIT 1 OFFSET 0), coduser2, 4, 'Gostei muito da Clínca')
+ 	      , ((SELECT codClinica FROM Clinica LIMIT 1 OFFSET 0), coduser3, 3, 'Achei a Clínica razoável')		
+ 		  , ((SELECT codClinica FROM Clinica LIMIT 1 OFFSET 0), coduser4, 2, 'Ruim essa Clínca')	
+ 		  , ((SELECT codClinica FROM Clinica LIMIT 1 OFFSET 0), coduser5, 1, 'Odiei essa Clínica')	
+		  
+		  , ((SELECT codClinica FROM Clinica LIMIT 1 OFFSET 1), coduser5, 1, 'Nunca Ouvi Falar dessa Clínica')
+		  , ((SELECT codClinica FROM Clinica LIMIT 1 OFFSET 1), coduser4, 2, 'Nunca fui, mas poderia melhorar')
+		  , ((SELECT codClinica FROM Clinica LIMIT 1 OFFSET 1), coduser3, 3, 'Nem fede nem cheira')
+		  , ((SELECT codClinica FROM Clinica LIMIT 1 OFFSET 1), coduser2, 4, 'Parabéns à Clínica, faz o mínimo')
+		  , ((SELECT codClinica FROM Clinica LIMIT 1 OFFSET 1), coduser1, 5, 'Top');
+		  
 		  
 INSERT INTO Humor (codUsuario, dataAvaliacao, nivelSatisfacao, comentario)
      VALUES (coduser1, '20231003', 5, 'Me diverti nesse dia!')

@@ -1,5 +1,6 @@
 package com.example.colheapi.Controllers;
 
+import com.example.colheapi.Classes.ApiResponse;
 import com.example.colheapi.Classes.Clinica;
 import com.example.colheapi.Classes.Usuario;
 import com.example.colheapi.Classes.UsuarioClinica;
@@ -7,6 +8,7 @@ import com.example.colheapi.Repositories.ClinicaRepository;
 import com.example.colheapi.Repositories.UsuarioClinicaRepository;
 import com.example.colheapi.Repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,11 +22,13 @@ import java.util.Optional;
 public class UsuarioClinicaController {
 
     private final UsuarioClinicaRepository usuarioClinicaRepository;
+
     @Autowired
     private UsuarioRepository usuarioRepository;
 
     @Autowired
     private ClinicaRepository clinicaRepository;
+
     @Autowired
     public UsuarioClinicaController(UsuarioClinicaRepository usuarioClinicaRepository) {
         this.usuarioClinicaRepository = usuarioClinicaRepository;
@@ -38,44 +42,47 @@ public class UsuarioClinicaController {
     @GetMapping("/buscarPorId/{id}")
     public UsuarioClinica buscarClinicaPorId(@PathVariable Long id) {
         return usuarioClinicaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário da clinica não encontrada com o ID: " + id));
+                .orElseThrow(() -> new RuntimeException("Usuário da clínica não encontrado com o ID: " + id));
     }
 
     @PostMapping("/adicionar")
-    public ResponseEntity<String> addUsuarioClinica(@RequestBody UsuarioClinica usuarioClinica) {
+    public ResponseEntity<ApiResponse<String>> addUsuarioClinica(@RequestBody UsuarioClinica usuarioClinica) {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(usuarioClinica.getUsuario());
-        Optional<Clinica> clinicaoptional = clinicaRepository.findById(usuarioClinica.getClinica());
+        Optional<Clinica> clinicaOptional = clinicaRepository.findById(usuarioClinica.getClinica());
 
-        if (usuarioOptional.isPresent() && clinicaoptional.isPresent()) {
+        if (usuarioOptional.isPresent() && clinicaOptional.isPresent()) {
             Date dataAvaliacao = usuarioClinica.getDataAvaliacao();
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(dataAvaliacao);
             calendar.add(Calendar.DAY_OF_MONTH, 1);
-            Date novaDataHumor = calendar.getTime();
+            Date novaDataAvaliacao = calendar.getTime();
 
-
-            usuarioClinica.setDataAvaliacao(novaDataHumor);
+            usuarioClinica.setDataAvaliacao(novaDataAvaliacao);
 
             boolean usuarioClinicaJaRegistrado = usuarioClinicaRepository.existsByUsuarioAndClinica(usuarioClinica.getUsuario(), usuarioClinica.getClinica());
             if (usuarioClinicaJaRegistrado) {
-                return ResponseEntity.badRequest().body("Avaliação para essa clinica já registrada por esse usuário");
+                ApiResponse<String> errorResponse = new ApiResponse<>("Avaliação para essa clínica já registrada por esse usuário", null);
+                return ResponseEntity.badRequest().body(errorResponse);
             } else {
                 usuarioClinicaRepository.save(usuarioClinica);
-
-                return ResponseEntity.ok("Avaliação inserida com sucesso");
+                ApiResponse<String> successResponse = new ApiResponse<>("Avaliação inserida com sucesso", null);
+                return ResponseEntity.ok(successResponse);
             }
-        }else{
-            return ResponseEntity.notFound().build();
+        } else {
+            ApiResponse<String> errorResponse = new ApiResponse<>("Usuário ou clínica não encontrados", null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
 
     @DeleteMapping("/deletarUsuarioClinica/{id}")
-    public ResponseEntity<String> deleteUsuarioClinica(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<String>> deleteUsuarioClinica(@PathVariable Long id) {
         if (usuarioClinicaRepository.existsById(id)) {
             usuarioClinicaRepository.deleteById(id);
-            return ResponseEntity.ok("Avaliação excluida com sucesso");
+            ApiResponse<String> successResponse = new ApiResponse<>("Avaliação excluída com sucesso", null);
+            return ResponseEntity.ok(successResponse);
         } else {
-            return ResponseEntity.notFound().build();
+            ApiResponse<String> errorResponse = new ApiResponse<>("Avaliação não encontrada", null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
 }

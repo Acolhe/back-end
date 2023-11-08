@@ -23,7 +23,7 @@ public class HumorDiario {
 
     @Temporal(TemporalType.DATE)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "UTC")
-    @Column(name = "data")
+    @Column(name = "dataavaliacao")
     private Date data;
 
     @Column(name = "nivelsatisfacao")
@@ -87,9 +87,8 @@ public class HumorDiario {
         this.comentario = comentario;
     }
 
-    public HumorDiario(Long codUsuario, Long codhumor, Date data, Integer nivelSatisfacao, String comentario, Usuario usuario) {
+    public HumorDiario(Long codUsuario, Date data, Integer nivelSatisfacao, String comentario, Usuario usuario) {
         this.codUsuario = codUsuario;
-        this.codhumor = codhumor;
         this.data = data;
         this.nivelSatisfacao = nivelSatisfacao;
         this.comentario = comentario;

@@ -9,5 +9,4 @@ import java.util.List;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query("SELECT u FROM Usuario u WHERE u.email = :email AND u.senha = :senha")
     List<Usuario> findbyEmailSenha(String email, String senha);
-
 }
