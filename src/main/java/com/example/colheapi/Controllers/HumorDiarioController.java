@@ -33,7 +33,7 @@ public class HumorDiarioController {
     }
 
     @PostMapping("/inserirHumor/{idUsuario}")
-    public ResponseEntity<ApiResponse<String>> inserirHumor(@PathVariable Long idUsuario, @RequestBody HumorDiario humorDiario) {
+    public ResponseEntity<ApiResponse> inserirHumor(@PathVariable Long idUsuario, @RequestBody HumorDiario humorDiario) {
         Optional<Usuario> usuarioOptional = usuarioRepository.findById(idUsuario);
 
         if (usuarioOptional.isPresent()) {
@@ -53,7 +53,15 @@ public class HumorDiarioController {
                 return ResponseEntity.ok(new ApiResponse<>("Humor já registrado hoje", null));
             } else {
                 humorDiarioRepository.save(humorDiario);
-                return ResponseEntity.ok(new ApiResponse<>("Humor inserido com sucesso", null));
+                Optional<Usuario> usuario1 = usuarioRepository.findById(idUsuario);
+                if (usuario1.isPresent()) {
+                    Usuario usuarioEncontrado = usuario1.get();
+                    List<HumorDiario> humores = humorDiarioRepository.findByCodUsuario(idUsuario);
+                    UsuarioComHumoresDTO usuarioHumorDTO = new UsuarioComHumoresDTO(usuarioEncontrado, humores);
+                    return ResponseEntity.ok(new ApiResponse<>("Usuário encontrado com sucesso", usuarioHumorDTO));
+                } else {
+                    return ResponseEntity.ok(new ApiResponse<>("Usuário não encontrado", null));
+                }
             }
         } else {
             ApiResponse<String> errorResponse = new ApiResponse<>("Usuário não encontrado com o ID: " + idUsuario, null);
