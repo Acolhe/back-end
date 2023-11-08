@@ -36,18 +36,17 @@ CREATE TABLE Usuario
 
 
 CREATE TABLE Clinica
-( codClinica       SERIAL
-, nmClinica        VARCHAR(50)
-, email            VARCHAR(50)
-, telefone         VARCHAR(50)
-, descricao        VARCHAR(125)
-, imagem           TEXT
-, bairro           VARCHAR(50)
-, cidade           VARCHAR(50)
-, nmEstado         VARCHAR(50)
-, sgEstado         VARCHAR(2)
-, patrocinada      BOOL         DEFAULT (FALSE)
-, nivelSatisfacao  SMALLINT     DEFAULT (3)
+( codClinica  SERIAL
+, nmClinica   VARCHAR(50)
+, email       VARCHAR(50)
+, telefone    VARCHAR(50)
+, descricao   VARCHAR(125)
+, imagem      TEXT
+, bairro      VARCHAR(50)
+, cidade      VARCHAR(50)
+, nmEstado    VARCHAR(50)
+, sgEstado    VARCHAR(2)
+, patrocinada BOOL        DEFAULT (FALSE)
 , PRIMARY KEY (codClinica)
 , UNIQUE (email)
 , UNIQUE (telefone)
